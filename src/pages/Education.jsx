@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import {
   FaGraduationCap,
   FaLaptopCode,
@@ -36,51 +37,83 @@ export default function Education() {
   ];
 
   return (
-    <div className="space-y-10">
-      {/* Experience Section */}
-      <section className="bg-gradient-to-r from-indigo-100 via-white to-indigo-50 p-6 rounded-2xl shadow-md">
-        <div className="flex items-center gap-3 mb-5">
-          <FaBriefcase className="text-indigo-600 text-2xl" />
-          <h2 className="text-2xl font-bold text-gray-800">Experience</h2>
-        </div>
-        {experienceData.map((exp, idx) => (
-          <article
-            key={idx}
-            className="bg-white hover:shadow-lg transition-all duration-300 border-l-4 border-indigo-500 p-5 rounded-lg mb-4"
-          >
-            <h3 className="font-semibold text-lg flex items-center gap-2 text-gray-800">
-              <FaLaptopCode className="text-indigo-500" /> {exp.title}
-            </h3>
-            <div className="text-sm text-gray-500 mt-1">
-              {exp.company} — {exp.period}
-            </div>
-            <p className="mt-3 text-gray-700 text-sm leading-relaxed">
-              {exp.description}
-            </p>
-          </article>
-        ))}
-      </section>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-6">
+      <div className="max-w-6xl mx-auto space-y-12">
+        <motion.h2 
+          className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent text-center mb-12"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          Education & Training
+        </motion.h2>
 
-      {/* Education Section */}
-      <section className="bg-gradient-to-r from-purple-100 via-white to-purple-50 p-6 rounded-2xl shadow-md">
-        <div className="flex items-center gap-3 mb-5">
-          <FaGraduationCap className="text-purple-600 text-2xl" />
-          <h2 className="text-2xl font-bold text-gray-800">Education</h2>
-        </div>
-        {educationData.map((edu, idx) => (
-          <article
-            key={idx}
-            className="bg-white hover:shadow-lg transition-all duration-300 border-l-4 border-purple-500 p-5 rounded-lg mb-4"
-          >
-            <h3 className="font-semibold text-lg flex items-center gap-2 text-gray-800">
-              <FaUniversity className="text-purple-500" /> {edu.degree}
-            </h3>
-            <div className="text-sm text-gray-500 mt-1">
-              {edu.school} — {edu.period}
+        {/* Experience Section */}
+        <motion.section 
+          className="bg-gradient-to-br from-white via-blue-50 to-indigo-50 p-8 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 border border-blue-100 backdrop-blur-sm"
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl">
+              <FaBriefcase className="text-white text-2xl" />
             </div>
-          </article>
-        ))}
-      </section>
+            <h3 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Training & Internship</h3>
+          </div>
+          {experienceData.map((exp, idx) => (
+            <motion.article
+              key={idx}
+              className="bg-white/60 hover:bg-white/80 transition-all duration-300 border-l-4 border-indigo-500 p-6 rounded-2xl backdrop-blur-sm"
+              whileHover={{ scale: 1.02 }}
+            >
+              <h4 className="font-bold text-xl flex items-center gap-3 text-gray-900 mb-2">
+                <FaLaptopCode className="text-indigo-500" /> {exp.title}
+              </h4>
+              <div className="text-indigo-600 font-semibold mb-3">
+                {exp.company} — {exp.period}
+              </div>
+              <p className="text-gray-700 leading-relaxed">
+                {exp.description}
+              </p>
+            </motion.article>
+          ))}
+        </motion.section>
+
+        {/* Education Section */}
+        <motion.section 
+          className="bg-gradient-to-br from-white via-purple-50 to-pink-50 p-8 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 border border-purple-100 backdrop-blur-sm"
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl">
+              <FaGraduationCap className="text-white text-2xl" />
+            </div>
+            <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Education</h3>
+          </div>
+          <div className="space-y-4">
+            {educationData.map((edu, idx) => (
+              <motion.article
+                key={idx}
+                className="bg-white/60 hover:bg-white/80 transition-all duration-300 border-l-4 border-purple-500 p-6 rounded-2xl backdrop-blur-sm"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 + 0.6 }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <h4 className="font-bold text-xl flex items-center gap-3 text-gray-900 mb-2">
+                  <FaUniversity className="text-purple-500" /> {edu.degree}
+                </h4>
+                <div className="text-purple-600 font-semibold">
+                  {edu.school} — {edu.period}
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </motion.section>
+      </div>
     </div>
   );
 }

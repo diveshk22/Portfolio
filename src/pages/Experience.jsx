@@ -17,10 +17,10 @@ export default function Experience() {
       role: "Full Stack Developer",
       company: "Personal Projects / Freelance",
       period: "2022 - Present",
-      logo: "https://cdn-icons-png.flaticon.com/512/5968/5968350.png", // React logo
-      github: "https://github.com/diveshk22", // updated GitHub link
+      logo: "https://cdn-icons-png.flaticon.com/512/5968/5968350.png",
+      github: "https://github.com/diveshk22",
       linkedin:
-        "https://www.linkedin.com/in/divesh-kumar-9a3b21348?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app", // updated LinkedIn link
+        "https://www.linkedin.com/in/divesh-kumar-9a3b21348?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
       website: "https://example.com",
       tech: [
         "React",
@@ -43,7 +43,7 @@ export default function Experience() {
       role: "Frontend Developer (Project)",
       company: "Banking Finance Website",
       period: "2023",
-      logo: "https://cdn-icons-png.flaticon.com/512/6062/6062646.png", // finance
+      logo: "https://cdn-icons-png.flaticon.com/512/6062/6062646.png",
       tech: ["HTML5", "CSS3", "Media Queries"],
       bullets: [
         "Designed responsive banking dashboard layouts using semantic HTML and modern CSS.",
@@ -55,7 +55,7 @@ export default function Experience() {
       role: "UI Developer (Bootstrap)",
       company: "Vegetable Store UI",
       period: "2023",
-      logo: "https://cdn-icons-png.flaticon.com/512/706/706164.png", // vegetable icon
+      logo: "https://cdn-icons-png.flaticon.com/512/706/706164.png",
       tech: ["Bootstrap", "HTML", "CSS"],
       bullets: [
         "Created a store UI using Bootstrap 5 grid and utility classes.",
@@ -67,7 +67,7 @@ export default function Experience() {
       role: "React & Node Developer",
       company: "Clones and APIs",
       period: "2024",
-      logo: "https://cdn-icons-png.flaticon.com/512/919/919825.png", // Node.js
+      logo: "https://cdn-icons-png.flaticon.com/512/919/919825.png",
       tech: ["React", "Node.js", "Express", "MongoDB"],
       bullets: [
         "Built full-stack clones using React frontend and Node/Express backend.",
@@ -82,202 +82,91 @@ export default function Experience() {
   };
 
   return (
-    <section className="experience-root">
-      <h2 className="heading">Experience</h2>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-6">
+      <div className="max-w-6xl mx-auto">
+        <motion.h2 
+          className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent text-center mb-12"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          Experience
+        </motion.h2>
 
-      <div className="grid">
-        {experiences.map((exp, idx) => (
-          <motion.article
-            key={idx}
-            className="card"
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1, duration: 0.5 }}
-          >
-            <header className="card-header">
-              <div className="left">
-                <img src={exp.logo} alt={exp.company} className="logo" />
-                <div>
-                  <h3 className="role">
-                    {exp.role} <span className="dash">—</span>{" "}
-                    <span className="company">{exp.company}</span>
-                  </h3>
-                  <div className="period">{exp.period}</div>
+        <div className="grid gap-8 md:grid-cols-2">
+          {experiences.map((exp, idx) => (
+            <motion.article
+              key={idx}
+              className="bg-gradient-to-br from-white via-blue-50 to-indigo-50 p-6 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 border border-blue-100 backdrop-blur-sm"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1, duration: 0.5 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              <header className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-4">
+                  <img src={exp.logo} alt={exp.company} className="w-16 h-16 rounded-2xl object-cover bg-blue-50 p-2" />
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">
+                      {exp.role}
+                    </h3>
+                    <p className="text-blue-600 font-semibold">{exp.company}</p>
+                    <p className="text-gray-500 text-sm">{exp.period}</p>
+                  </div>
                 </div>
-              </div>
 
-              <div className="icons">
-                {exp.github && (
-                  <a href={exp.github} target="_blank" rel="noreferrer">
-                    <FaGithub />
-                  </a>
-                )}
-                {exp.linkedin && (
-                  <a href={exp.linkedin} target="_blank" rel="noreferrer">
-                    <FaLinkedin />
-                  </a>
-                )}
-                {exp.website && (
-                  <a href={exp.website} target="_blank" rel="noreferrer">
-                    <FaGlobe />
-                  </a>
-                )}
-                <FaCode title={`Tech: ${exp.tech.join(", ")}`} />
-                <button
-                  onClick={() => toggleExpand(idx)}
-                  className="expand-btn"
-                  title="Show details"
+                <div className="flex items-center gap-2">
+                  {exp.github && (
+                    <a href={exp.github} target="_blank" rel="noreferrer" className="p-2 bg-gray-100 hover:bg-gray-800 text-gray-700 hover:text-white rounded-xl transition-all duration-300 transform hover:scale-110">
+                      <FaGithub className="text-lg" />
+                    </a>
+                  )}
+                  {exp.linkedin && (
+                    <a href={exp.linkedin} target="_blank" rel="noreferrer" className="p-2 bg-blue-100 hover:bg-blue-600 text-blue-700 hover:text-white rounded-xl transition-all duration-300 transform hover:scale-110">
+                      <FaLinkedin className="text-lg" />
+                    </a>
+                  )}
+                  <button
+                    onClick={() => toggleExpand(idx)}
+                    className="p-2 bg-indigo-100 hover:bg-indigo-600 text-indigo-700 hover:text-white rounded-xl transition-all duration-300 transform hover:scale-110"
+                  >
+                    {expandedIndex === idx ? <FaChevronUp /> : <FaChevronDown />}
+                  </button>
+                </div>
+              </header>
+
+              {expandedIndex === idx && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  transition={{ duration: 0.4 }}
+                  className="mt-4"
                 >
-                  {expandedIndex === idx ? <FaChevronUp /> : <FaChevronDown />}
-                </button>
-              </div>
-            </header>
+                  <ul className="space-y-2 text-gray-700 mb-4">
+                    {exp.bullets.map((bullet, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="text-blue-500 mt-1">•</span>
+                        {bullet}
+                      </li>
+                    ))}
+                  </ul>
 
-            {expandedIndex === idx && (
-              <motion.div
-                className="expanded"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                transition={{ duration: 0.4 }}
-              >
-                <ul className="bullets">
-                  {exp.bullets.map((b, i) => (
-                    <li key={i}>{b}</li>
-                  ))}
-                </ul>
-
-                <footer className="tech-list">
-                  {exp.tech.map((t, i) => (
-                    <span key={i} className="chip">
-                      {t}
-                    </span>
-                  ))}
-                </footer>
-              </motion.div>
-            )}
-          </motion.article>
-        ))}
+                  <div className="flex flex-wrap gap-2">
+                    {exp.tech.map((tech, i) => (
+                      <span
+                        key={i}
+                        className="px-3 py-1 bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 rounded-full text-sm font-medium border border-blue-200"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </motion.article>
+          ))}
+        </div>
       </div>
-
-      <style>{`
-        .experience-root {
-          padding: 2rem;
-          max-width: 1100px;
-          margin: 0 auto;
-          font-family: 'Inter', system-ui;
-        }
-        .heading {
-          font-size: 2rem;
-          font-weight: 700;
-          color: #111827;
-          text-align: center;
-          margin-bottom: 2rem;
-        }
-        .grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 1.5rem;
-        }
-        @media (min-width: 768px) {
-          .grid {
-            grid-template-columns: 1fr 1fr;
-          }
-        }
-
-        .card {
-          background: linear-gradient(135deg, #ffffff, #f9fafc);
-          border-radius: 18px;
-          padding: 1.5rem;
-          box-shadow: 0 6px 18px rgba(0,0,0,0.07);
-          transition: transform .2s ease, box-shadow .2s ease;
-        }
-        .card:hover {
-          transform: translateY(-6px);
-          box-shadow: 0 14px 30px rgba(0,0,0,0.1);
-        }
-
-        .card-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-        .left {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-        }
-        .logo {
-          width: 58px;
-          height: 58px;
-          border-radius: 14px;
-          object-fit: cover;
-          background: #eef2ff;
-        }
-        .role {
-          font-size: 1.1rem;
-          font-weight: 600;
-          color: #1e293b;
-        }
-        .company {
-          color: #4f46e5;
-        }
-        .period {
-          color: #6b7280;
-          font-size: 0.85rem;
-        }
-
-        .icons {
-          display: flex;
-          align-items: center;
-          gap: 0.6rem;
-          font-size: 1.1rem;
-          color: #374151;
-        }
-        .icons a, .expand-btn {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          padding: 6px;
-          border-radius: 8px;
-          background: transparent;
-          transition: all 0.2s ease;
-          border: none;
-          cursor: pointer;
-        }
-        .icons a:hover, .expand-btn:hover {
-          background: rgba(99,102,241,0.1);
-          color: #4f46e5;
-        }
-
-        .expanded {
-          margin-top: 1rem;
-        }
-
-        .bullets {
-          color: #374151;
-          margin-top: 0.75rem;
-          padding-left: 1.1rem;
-          line-height: 1.6;
-        }
-        .bullets li {
-          margin-bottom: 0.5rem;
-        }
-
-        .tech-list {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.5rem;
-          margin-top: 1rem;
-        }
-        .chip {
-          background: linear-gradient(90deg, rgba(99,102,241,0.08), rgba(99,102,241,0.03));
-          border: 1px solid rgba(99,102,241,0.12);
-          color: #4f46e5;
-          padding: 6px 12px;
-          border-radius: 9999px;
-          font-size: 0.8rem;
-        }
-      `}</style>
-    </section>
+    </div>
   );
 }

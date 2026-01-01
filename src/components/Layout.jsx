@@ -1,41 +1,44 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import Footer from "./Footer";
 
 function NavItem({ to, children }) {
+  const handleClick = (e) => {
+    e.preventDefault();
+    const element = document.getElementById(to.replace('#', ''));
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
-    <NavLink
-      to={to}
-      className={({ isActive }) =>
-        isActive
-          ? "text-teal-500 font-semibold"
-          : "text-gray-600 hover:text-teal-500"
-      }
+    <a
+      href={to}
+      onClick={handleClick}
+      className="text-gray-600 hover:text-teal-500 cursor-pointer"
     >
       {children}
-    </NavLink>
+    </a>
   );
 }
 
 export default function Layout({ children }) {
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-white shadow-sm">
+      <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="text-xl font-bold text-teal-600">
             Divesh Kumar(Dev)
           </div>
           <nav className="space-x-4">
-            <NavItem to="/">Dashboard</NavItem>
-            <NavItem to="/experience">Experience</NavItem>
-            <NavItem to="/education">Education</NavItem>
-            <NavItem to="/contact">Contact</NavItem>
-            <NavItem to="/location">Location</NavItem>
+            <NavItem to="#dashboard">Dashboard</NavItem>
+            <NavItem to="#experience">Experience</NavItem>
+            <NavItem to="#education">Education</NavItem>
+            <NavItem to="#contact">Contact</NavItem>
           </nav>
         </div>
       </header>
 
-      <main className="container mx-auto px-6 py-10 flex-1">{children}</main>
+      <main className="pt-20">{children}</main>
 
       <Footer />
     </div>
