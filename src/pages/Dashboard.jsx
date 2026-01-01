@@ -1,6 +1,7 @@
 import React from "react";
 import { FaGithub, FaLinkedin, FaDownload, FaGlobe } from "react-icons/fa";
-import profileImage from "../Public/profile.jpg";
+import profileImage from "../profile/profile.jpg";
+import resumeFile from "../profile/dev kumar.pdf";
 import { profile } from "../data/profile.js";
 
 export default function Dashboard() {
@@ -67,7 +68,7 @@ export default function Dashboard() {
 
           <div className="mt-12 flex justify-center">
             <a
-              href={`/${profile.resumeFileName}`}
+              href={resumeFile}
               download={profile.resumeFileName}
               className="group bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-full font-bold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-2xl transform hover:scale-105 hover:shadow-blue-500/25"
             >
