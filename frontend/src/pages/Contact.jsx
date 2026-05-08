@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaEnvelope, FaPhone, FaPaperPlane } from "react-icons/fa";
 import SuccessPopup from "../components/SuccessPopup";
+import API_URL from "../config";
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -16,7 +17,7 @@ export default function Contact() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/profile")
+    fetch(`${API_URL}/api/profile`)
       .then((res) => res.json())
       .then((data) => setProfile(data))
       .catch((err) => console.error(err));
@@ -30,7 +31,7 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/messages", {
+      const response = await fetch(`${API_URL}/api/messages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

@@ -1,4 +1,5 @@
 // server.js
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -6,7 +7,7 @@ const multer = require("multer");
 const path = require("path");
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
-require("dotenv").config();
+
 
 // --- AUTH (from .env) ---
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
@@ -17,8 +18,10 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "*", // Set FRONTEND_URL in Render env vars
-  }),
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
 );
 app.use(express.json());
 
@@ -111,7 +114,7 @@ app.put(
       }
 
       const profile = await Profile.findOneAndUpdate({}, updateData, {
-        new: true,
+        returnDocument: "after",
         upsert: true,
       });
       res.json(profile);
@@ -123,36 +126,60 @@ app.put(
 
 // 2. EXPERIENCE ROUTES
 app.get("/api/experience", async (req, res) => {
-  const exp = await Experience.find().sort({ createdAt: 1 });
-  res.json(exp);
+  try {
+    const exp = await Experience.find().sort({ createdAt: 1 });
+    res.json(exp);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.post("/api/experience", async (req, res) => {
-  const newExp = new Experience(req.body);
-  await newExp.save();
-  res.json(newExp);
+  try {
+    const newExp = new Experience(req.body);
+    await newExp.save();
+    res.json(newExp);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.delete("/api/experience/:id", async (req, res) => {
-  await Experience.findByIdAndDelete(req.params.id);
-  res.json({ message: "Experience deleted" });
+  try {
+    await Experience.findByIdAndDelete(req.params.id);
+    res.json({ message: "Experience deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // 3. EDUCATION ROUTES
 app.get("/api/education", async (req, res) => {
-  const edu = await Education.find().sort({ createdAt: -1 });
-  res.json(edu);
+  try {
+    const edu = await Education.find().sort({ createdAt: -1 });
+    res.json(edu);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.post("/api/education", async (req, res) => {
-  const newEdu = new Education(req.body);
-  await newEdu.save();
-  res.json(newEdu);
+  try {
+    const newEdu = new Education(req.body);
+    await newEdu.save();
+    res.json(newEdu);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.delete("/api/education/:id", async (req, res) => {
-  await Education.findByIdAndDelete(req.params.id);
-  res.json({ message: "Education deleted" });
+  try {
+    await Education.findByIdAndDelete(req.params.id);
+    res.json({ message: "Education deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // 4. CONTACT SUBMISSIONS ROUTES
@@ -167,8 +194,12 @@ app.post("/api/messages", async (req, res) => {
 });
 
 app.get("/api/messages", async (req, res) => {
-  const messages = await Message.find().sort({ createdAt: -1 });
-  res.json(messages);
+  try {
+    const messages = await Message.find().sort({ createdAt: -1 });
+    res.json(messages);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // 5. DASHBOARD STATS ROUTE

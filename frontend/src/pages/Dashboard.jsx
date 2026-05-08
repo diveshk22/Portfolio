@@ -1,13 +1,14 @@
 // src/pages/Dashboard.jsx
 import React, { useState, useEffect } from "react";
 import { FaGithub, FaLinkedin, FaDownload, FaGlobe } from "react-icons/fa";
+import API_URL from "../config";
 
 export default function Dashboard() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/profile")
+    fetch(`${API_URL}/api/profile`)
       .then((res) => res.json())
       .then((data) => {
         setProfile(data);
@@ -26,7 +27,7 @@ export default function Dashboard() {
     );
   }
 
-  const backendHost = "http://localhost:5000";
+  const backendHost = API_URL;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-6">

@@ -21,7 +21,7 @@ function NavItem({ to, children }) {
   );
 }
 
-export default function Layout({ children, onAdminClick }) {
+export default function Layout({ children }) {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
@@ -34,12 +34,7 @@ export default function Layout({ children, onAdminClick }) {
             <NavItem to="#experience">Experience</NavItem>
             <NavItem to="#education">Education</NavItem>
             <NavItem to="#contact">Contact</NavItem>
-            <button
-              onClick={onAdminClick}
-              className="ml-4 px-4 py-2 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300"
-            >
-              Admin
-            </button>
+
           </nav>
         </div>
       </header>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import API_URL from "../config";
 
 export default function Experience() {
   const [experiences, setExperiences] = useState([]);
@@ -8,7 +9,7 @@ export default function Experience() {
   const [expandedIndex, setExpandedIndex] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/experience")
+    fetch(`${API_URL}/api/experience`)
       .then((res) => res.json())
       .then((data) => {
         setExperiences(data);
