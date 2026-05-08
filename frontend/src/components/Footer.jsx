@@ -6,7 +6,7 @@ export default function Footer() {
     name: "Divesh Kumar",
     github: "https://github.com/diveshk22",
     linkedin:
-      "https://www.linkedin.com/in/divesh-kumar-9a3b21348?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+      "https://www.linkedin.com/in/divesh-kumar-9a3b21348?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
     facebook: "https://www.facebook.com/share/1A3nTjfzp4/?mibextid=wwXIfr",
     instagram:
       "https://www.instagram.com/mr_dev_822?igsh=MWRiNnQxazR0bnZkeA%3D%3D&utm_source=qr",

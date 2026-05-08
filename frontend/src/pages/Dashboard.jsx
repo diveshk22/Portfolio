@@ -155,7 +155,7 @@ export default function Dashboard() {
             </h4>
             <div className="flex gap-4 justify-center">
               <a
-                href={profile.social?.github}
+                href={profile.social?.github || "https://github.com/diveshk22"}
                 target="_blank"
                 rel="noreferrer"
                 className="group relative p-4 bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl hover:from-gray-800 hover:to-black transition-all duration-500 transform hover:scale-110 hover:rotate-3 shadow-lg hover:shadow-2xl"
@@ -164,7 +164,7 @@ export default function Dashboard() {
                 <div className="absolute -top-2 -right-2 w-4 h-4 bg-green-500 rounded-full animate-ping group-hover:animate-pulse"></div>
               </a>
               <a
-                href={profile.social?.linkedin}
+                href={profile.social?.linkedin || "https://www.linkedin.com/in/divesh-kumar-9a3b21348?utm_source=share_via&utm_content=profile&utm_medium=member_ios"}
                 target="_blank"
                 rel="noreferrer"
                 className="group relative p-4 bg-gradient-to-r from-blue-100 to-blue-200 rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-500 transform hover:scale-110 hover:-rotate-3 shadow-lg hover:shadow-2xl"
