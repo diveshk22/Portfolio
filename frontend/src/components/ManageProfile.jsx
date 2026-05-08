@@ -11,8 +11,6 @@ export default function ManageProfile() {
     phone: "",
     social: { github: "", linkedin: "" },
   });
-  const [profileImage, setProfileImage] = useState(null);
-  const [resume, setResume] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -43,9 +41,6 @@ export default function ManageProfile() {
     formData.append("email", profile.email);
     formData.append("phone", profile.phone);
     formData.append("social", JSON.stringify(profile.social));
-
-    if (profileImage) formData.append("profileImage", profileImage);
-    if (resume) formData.append("resume", resume);
 
     const res = await fetch(`${API_URL}/api/profile`, {
       method: "PUT",
@@ -125,28 +120,7 @@ export default function ManageProfile() {
           />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-6">
-        <div>
-          <label className="block text-sm font-semibold text-gray-700">
-            Profile Pic
-          </label>
-          <input
-            type="file"
-            onChange={(e) => setProfileImage(e.target.files[0])}
-            className="w-full mt-1"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-semibold text-gray-700">
-            Resume PDF
-          </label>
-          <input
-            type="file"
-            onChange={(e) => setResume(e.target.files[0])}
-            className="w-full mt-1"
-          />
-        </div>
-      </div>
+
       <button
         type="submit"
         className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold"
