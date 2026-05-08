@@ -38,18 +38,20 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Cloudinary Storage (replaces local multer disk storage)
-const storage = new CloudinaryStorage({
+// Smart Cloudinary storage: images as 'image', PDFs as 'raw'
+const smartStorage = new CloudinaryStorage({
   cloudinary,
   params: async (req, file) => {
+    const isPdf = file.mimetype === "application/pdf";
     return {
       folder: "portfolio",
-      resource_type: "auto", // supports images and PDFs (resume)
-      public_id: Date.now() + "-" + file.originalname.replace(/\s+/g, "_"),
+      resource_type: isPdf ? "raw" : "image",
+      allowed_formats: isPdf ? ["pdf"] : ["jpg", "jpeg", "png", "webp"],
     };
   },
 });
-const upload = multer({ storage });
+
+const upload = multer({ storage: smartStorage });
 
 // Models
 const Profile = require("./models/Profile");
@@ -105,12 +107,12 @@ app.put(
       if (typeof req.body.skills === "string")
         updateData.skills = JSON.parse(req.body.skills);
 
-      // Cloudinary returns the file URL in req.files[].path
+      // Cloudinary returns the file URL in req.files[].path (secure_url)
       if (req.files && req.files.profileImage) {
-        updateData.profileImage = req.files.profileImage[0].path;
+        updateData.profileImage = req.files.profileImage[0].path || req.files.profileImage[0].secure_url;
       }
       if (req.files && req.files.resume) {
-        updateData.resumeUrl = req.files.resume[0].path;
+        updateData.resumeUrl = req.files.resume[0].path || req.files.resume[0].secure_url;
       }
 
       const profile = await Profile.findOneAndUpdate({}, updateData, {
