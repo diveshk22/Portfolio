@@ -4,32 +4,46 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 require("dotenv").config();
 
-// --- AUTH ROUTE ---
-const ADMIN_EMAIL = "diveshk960@gmail.com";
-const ADMIN_PASSWORD = "Divesh@22";
+// --- AUTH (from .env) ---
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "*", // Set FRONTEND_URL in Render env vars
+  }),
+);
 app.use(express.json());
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // MongoDB Connection
 mongoose
-  .connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/portfolio")
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB successfully"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-// File Upload Engine Setup
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+// Cloudinary Config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// Cloudinary Storage (replaces local multer disk storage)
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: async (req, file) => {
+    return {
+      folder: "portfolio",
+      resource_type: "auto", // supports images and PDFs (resume)
+      public_id: Date.now() + "-" + file.originalname.replace(/\s+/g, "_"),
+    };
   },
 });
 const upload = multer({ storage });
@@ -56,7 +70,6 @@ app.get("/api/profile", async (req, res) => {
   try {
     let profile = await Profile.findOne();
     if (!profile) {
-      // Seed default profile structure if database is empty
       profile = await Profile.create({
         name: "Your Name",
         title: "Developer",
@@ -89,11 +102,12 @@ app.put(
       if (typeof req.body.skills === "string")
         updateData.skills = JSON.parse(req.body.skills);
 
+      // Cloudinary returns the file URL in req.files[].path
       if (req.files && req.files.profileImage) {
-        updateData.profileImage = `/uploads/${req.files.profileImage[0].filename}`;
+        updateData.profileImage = req.files.profileImage[0].path;
       }
       if (req.files && req.files.resume) {
-        updateData.resumeUrl = `/uploads/${req.files.resume[0].filename}`;
+        updateData.resumeUrl = req.files.resume[0].path;
       }
 
       const profile = await Profile.findOneAndUpdate({}, updateData, {
@@ -160,16 +174,23 @@ app.get("/api/messages", async (req, res) => {
 // 5. DASHBOARD STATS ROUTE
 app.get("/api/dashboard/stats", async (req, res) => {
   try {
-    const [totalMessages, totalExperiences, totalEducation, profile, recentMessages, experiences, educations] =
-      await Promise.all([
-        Message.countDocuments(),
-        Experience.countDocuments(),
-        Education.countDocuments(),
-        Profile.findOne(),
-        Message.find().sort({ createdAt: -1 }).limit(5),
-        Experience.find().sort({ createdAt: -1 }),
-        Education.find().sort({ createdAt: -1 }),
-      ]);
+    const [
+      totalMessages,
+      totalExperiences,
+      totalEducation,
+      profile,
+      recentMessages,
+      experiences,
+      educations,
+    ] = await Promise.all([
+      Message.countDocuments(),
+      Experience.countDocuments(),
+      Education.countDocuments(),
+      Profile.findOne(),
+      Message.find().sort({ createdAt: -1 }).limit(5),
+      Experience.find().sort({ createdAt: -1 }),
+      Education.find().sort({ createdAt: -1 }),
+    ]);
     res.json({
       totalMessages,
       totalExperiences,
