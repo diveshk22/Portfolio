@@ -3,10 +3,6 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const multer = require("multer");
-const path = require("path");
-const cloudinary = require("cloudinary").v2;
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 
 // --- AUTH (from .env) ---
@@ -30,28 +26,6 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB successfully"))
   .catch((err) => console.error("MongoDB connection error:", err));
-
-// Cloudinary Config
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
-// Smart Cloudinary storage: images as 'image', PDFs as 'raw'
-const smartStorage = new CloudinaryStorage({
-  cloudinary,
-  params: async (req, file) => {
-    const isPdf = file.mimetype === "application/pdf";
-    return {
-      folder: "portfolio",
-      resource_type: isPdf ? "raw" : "image",
-      allowed_formats: isPdf ? ["pdf"] : ["jpg", "jpeg", "png", "webp"],
-    };
-  },
-});
-
-const upload = multer({ storage: smartStorage });
 
 // Models
 const Profile = require("./models/Profile");
@@ -91,29 +65,14 @@ app.get("/api/profile", async (req, res) => {
   }
 });
 
-app.put(
-  "/api/profile",
-  upload.fields([
-    { name: "profileImage", maxCount: 1 },
-    { name: "resume", maxCount: 1 },
-  ]),
-  async (req, res) => {
+app.put("/api/profile", async (req, res) => {
     try {
       const updateData = { ...req.body };
 
-      // Parse social and skills if sent as stringified JSON
       if (typeof req.body.social === "string")
         updateData.social = JSON.parse(req.body.social);
       if (typeof req.body.skills === "string")
         updateData.skills = JSON.parse(req.body.skills);
-
-      // Cloudinary returns the file URL in req.files[].path (secure_url)
-      if (req.files && req.files.profileImage) {
-        updateData.profileImage = req.files.profileImage[0].path || req.files.profileImage[0].secure_url;
-      }
-      if (req.files && req.files.resume) {
-        updateData.resumeUrl = req.files.resume[0].path || req.files.resume[0].secure_url;
-      }
 
       const profile = await Profile.findOneAndUpdate({}, updateData, {
         returnDocument: "after",
