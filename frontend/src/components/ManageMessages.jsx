@@ -1,11 +1,12 @@
 // src/admin/components/ManageMessages.jsx
 import React, { useState, useEffect } from "react";
+import API_URL from "../config";
 
 export default function ManageMessages() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/messages")
+    fetch(`${API_URL}/api/messages`)
       .then((res) => res.json())
       .then((data) => setMessages(data));
   }, []);

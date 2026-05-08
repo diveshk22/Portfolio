@@ -1,5 +1,6 @@
 // src/admin/components/ManageEducation.jsx
 import React, { useState, useEffect } from "react";
+import API_URL from "../config";
 
 export default function ManageEducation() {
   const [educations, setEducations] = useState([]);
@@ -15,14 +16,14 @@ export default function ManageEducation() {
   }, []);
 
   const fetchEducation = () => {
-    fetch("http://localhost:5000/api/education")
+    fetch(`${API_URL}/api/education`)
       .then((res) => res.json())
       .then((data) => setEducations(data));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await fetch("http://localhost:5000/api/education", {
+    await fetch(`${API_URL}/api/education`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
@@ -32,7 +33,7 @@ export default function ManageEducation() {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:5000/api/education/${id}`, {
+    await fetch(`${API_URL}/api/education/${id}`, {
       method: "DELETE",
     });
     fetchEducation();

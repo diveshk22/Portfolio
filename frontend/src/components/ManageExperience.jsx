@@ -1,5 +1,6 @@
 // src/admin/components/ManageExperience.jsx
 import React, { useState, useEffect } from "react";
+import API_URL from "../config";
 
 export default function ManageExperience() {
   const [experiences, setExperiences] = useState([]);
@@ -16,7 +17,7 @@ export default function ManageExperience() {
   }, []);
 
   const fetchExperiences = () => {
-    fetch("http://localhost:5000/api/experience")
+    fetch(`${API_URL}/api/experience`)
       .then((res) => res.json())
       .then((data) => setExperiences(data));
   };
@@ -27,7 +28,7 @@ export default function ManageExperience() {
       ...form,
       tech: form.tech.split(",").map((t) => t.trim()).filter(Boolean),
     };
-    await fetch("http://localhost:5000/api/experience", {
+    await fetch(`${API_URL}/api/experience`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -37,7 +38,7 @@ export default function ManageExperience() {
   };
 
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:5000/api/experience/${id}`, {
+    await fetch(`${API_URL}/api/experience/${id}`, {
       method: "DELETE",
     });
     fetchExperiences();

@@ -1,12 +1,13 @@
 // src/admin/components/ManageSkills.jsx
 import React, { useState, useEffect } from "react";
+import API_URL from "../config";
 
 export default function ManageSkills() {
   const [skills, setSkills] = useState([]);
   const [newSkill, setNewSkill] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/profile")
+    fetch(`${API_URL}/api/profile`)
       .then((res) => res.json())
       .then((data) => setSkills(data.skills || []));
   }, []);
@@ -14,7 +15,7 @@ export default function ManageSkills() {
   const addSkill = async () => {
     if (!newSkill) return;
     const updatedSkills = [...skills, newSkill];
-    const res = await fetch("http://localhost:5000/api/profile", {
+    const res = await fetch(`${API_URL}/api/profile`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ skills: updatedSkills }),
@@ -27,7 +28,7 @@ export default function ManageSkills() {
 
   const deleteSkill = async (skillToDelete) => {
     const updatedSkills = skills.filter((s) => s !== skillToDelete);
-    const res = await fetch("http://localhost:5000/api/profile", {
+    const res = await fetch(`${API_URL}/api/profile`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ skills: updatedSkills }),
