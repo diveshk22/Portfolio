@@ -1,5 +1,6 @@
 // src/admin/components/ManageProfile.jsx
 import React, { useState, useEffect } from "react";
+import API_URL from "../config";
 
 export default function ManageProfile() {
   const [profile, setProfile] = useState({
@@ -15,7 +16,7 @@ export default function ManageProfile() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/profile")
+    fetch(`${API_URL}/api/profile`)
       .then((res) => res.json())
       .then((data) => {
         setProfile(data);
@@ -46,7 +47,7 @@ export default function ManageProfile() {
     if (profileImage) formData.append("profileImage", profileImage);
     if (resume) formData.append("resume", resume);
 
-    const res = await fetch("http://localhost:5000/api/profile", {
+    const res = await fetch(`${API_URL}/api/profile`, {
       method: "PUT",
       body: formData,
     });
