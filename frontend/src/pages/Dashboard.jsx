@@ -27,8 +27,6 @@ export default function Dashboard() {
     );
   }
 
-  const backendHost = API_URL;
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-6">
       <div className="grid gap-8 md:grid-cols-3 max-w-7xl mx-auto">
@@ -37,11 +35,7 @@ export default function Dashboard() {
             <div className="relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full blur opacity-75 animate-pulse"></div>
               <img
-                src={
-                  profile.profileImage
-                    ? `${backendHost}${profile.profileImage}`
-                    : "https://placehold.co/150"
-                }
+                src="/profile.jpg"
                 alt={profile.name}
                 className="relative w-28 h-28 rounded-full border-4 border-white shadow-2xl object-cover transform hover:scale-105 transition-all duration-300"
               />
@@ -87,21 +81,19 @@ export default function Dashboard() {
           </div>
 
           <div className="mt-12 flex justify-center">
-            {profile.resumeUrl && (
-              <a
-                href={`${backendHost}${profile.resumeUrl}`}
-                download
-                className="group bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-full font-bold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-2xl transform hover:scale-105 hover:shadow-blue-500/25"
-              >
-                <span className="flex items-center gap-2">
-                  <FaDownload className="text-lg" />
-                  Download Resume
-                  <span className="group-hover:translate-x-1 transition-transform duration-300">
-                    →
-                  </span>
+            <a
+              href="/resume.pdf"
+              download="resume.pdf"
+              className="group bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-full font-bold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-2xl transform hover:scale-105 hover:shadow-blue-500/25"
+            >
+              <span className="flex items-center gap-2">
+                <FaDownload className="text-lg" />
+                Download Resume
+                <span className="group-hover:translate-x-1 transition-transform duration-300">
+                  →
                 </span>
-              </a>
-            )}
+              </span>
+            </a>
           </div>
         </section>
 
