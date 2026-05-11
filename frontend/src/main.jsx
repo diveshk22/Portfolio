@@ -1,5 +1,8 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
+import {startKeepAlive} from "./utils/keepAlive";
+
+startKeepAlive();
 import App from "./App";
 import "./index.css";
 
