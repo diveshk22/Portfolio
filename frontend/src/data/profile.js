@@ -23,6 +23,6 @@ export const profile = {
     "PHP",
     "Laravel",
     "WordPress",
-    "Fullstack Development",
+    "AWS",
   ],
 };

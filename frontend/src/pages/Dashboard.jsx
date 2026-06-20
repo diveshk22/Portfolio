@@ -1,158 +1,272 @@
-// src/pages/Dashboard.jsx
 import React from "react";
-import { FaGithub, FaLinkedin, FaDownload, FaGlobe } from "react-icons/fa";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaDownload,
+  FaEnvelope,
+  FaPhone,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 import { profile } from "../data/profile";
+import { motion } from "framer-motion";
 
 export default function Dashboard() {
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-6">
-      <div className="grid gap-8 md:grid-cols-3 max-w-7xl mx-auto">
-        <section className="md:col-span-2 bg-gradient-to-br from-white via-blue-50 to-indigo-50 p-8 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 border border-blue-100 backdrop-blur-sm animate-fade-in">
-          <div className="flex items-center gap-6 relative">
+    <div
+      className="min-h-screen p-4 sm:p-6"
+      style={{
+        background:
+          "linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%)",
+      }}
+    >
+      <div className="grid gap-6 sm:gap-8 md:grid-cols-3 max-w-7xl mx-auto">
+        {/* Left - Main Card */}
+        <motion.section
+          className="md:col-span-2 p-4 sm:p-6 md:p-8 rounded-3xl border border-indigo-900"
+          style={{
+            background: "rgba(30, 27, 75, 0.6)",
+            backdropFilter: "blur(20px)",
+          }}
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          {/* Profile Header */}
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
             <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full blur opacity-75 animate-pulse"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full blur opacity-75 animate-pulse"></div>
               <img
                 src="/profile.jpg"
                 alt={profile.name}
-                className="relative w-28 h-28 rounded-full border-4 border-white shadow-2xl object-cover transform hover:scale-105 transition-all duration-300"
+                className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full border-4 object-cover"
+                style={{ borderColor: "#6366f1" }}
               />
             </div>
-            <div>
-              <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent animate-fade-in">
-                {profile.name}
-              </h1>
-              <p className="text-indigo-600 font-semibold text-2xl mt-2 animate-slide-up">
+            <div className="text-center sm:text-left">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white">{profile.name}</h1>
+              <p className="text-indigo-400 font-semibold text-lg sm:text-xl mt-2">
                 {profile.title}
               </p>
+              <div className="flex items-center gap-2 mt-2">
+                <FaMapMarkerAlt className="text-indigo-400 text-sm" />
+                <span className="text-slate-400 text-sm">
+                  {profile.location && profile.location !== "India"
+                    ? profile.location
+                    : "Chandigarh, India"}
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="mt-8 p-6 bg-white/60 rounded-2xl backdrop-blur-sm border border-blue-100">
-            <p className="text-gray-700 text-lg leading-relaxed">
+          {/* Bio */}
+          <div
+            className="mt-8 p-6 rounded-2xl border border-indigo-800"
+            style={{ background: "rgba(99, 102, 241, 0.08)" }}
+          >
+            <p className="text-slate-300 text-lg leading-relaxed">
               {profile.summary}
             </p>
           </div>
 
+          {/* Skills */}
           <div className="mt-10">
-            <h3 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg">
-                <FaGlobe className="text-white text-xl" />
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+              <div
+                className="p-2 rounded-lg"
+                style={{
+                  background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+                }}
+              >
+                <span className="text-white text-lg">⚡</span>
               </div>
               Tech Skills
             </h3>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3">
               {profile.skills?.map((skill, index) => (
-                <span
+                <motion.span
                   key={skill}
-                  className="group relative text-sm px-6 py-3 bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 cursor-pointer border border-blue-200 hover:border-blue-400"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                  className="text-sm px-5 py-2 rounded-full font-medium cursor-pointer border border-indigo-700 text-indigo-300 hover:text-white hover:border-indigo-400 transition-all duration-300"
+                  style={{ background: "rgba(99, 102, 241, 0.15)" }}
+                  whileHover={{
+                    scale: 1.1,
+                    background: "rgba(99, 102, 241, 0.4)",
+                  }}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
                 >
-                  <span className="relative z-10 font-medium">{skill}</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <span className="absolute inset-0 flex items-center justify-center text-white font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-                    {skill}
-                  </span>
-                </span>
+                  {skill}
+                </motion.span>
               ))}
             </div>
           </div>
 
-          <div className="mt-12 flex justify-center">
-            <a
+          {/* Download Resume */}
+          <div className="mt-10 flex justify-center">
+            <motion.a
               href="/resume.pdf"
               download="resume.pdf"
-              className="group bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-full font-bold hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-2xl transform hover:scale-105 hover:shadow-blue-500/25"
+              className="flex items-center gap-3 px-8 py-4 rounded-full font-bold text-white shadow-2xl"
+              style={{
+                background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+              }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              <span className="flex items-center gap-2">
-                <FaDownload className="text-lg" />
-                Download Resume
-                <span className="group-hover:translate-x-1 transition-transform duration-300">
-                  →
-                </span>
-              </span>
-            </a>
+              <FaDownload />
+              Download Resume
+              <span>→</span>
+            </motion.a>
           </div>
-        </section>
+        </motion.section>
 
-        <aside className="bg-gradient-to-br from-white to-blue-50 p-8 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 border border-blue-100 backdrop-blur-sm animate-slide-in-right">
-          <div className="text-center mb-8">
+        {/* Right - Connect Card */}
+        <motion.aside
+          className="p-4 sm:p-6 md:p-8 rounded-3xl border border-indigo-900 flex flex-col gap-6"
+          style={{
+            background: "rgba(30, 27, 75, 0.6)",
+            backdropFilter: "blur(20px)",
+          }}
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          {/* Avatar glow */}
+          <div className="text-center">
             <div className="relative inline-block">
-              <div className="absolute -inset-2 bg-gradient-to-r from-blue-400 via-purple-500 to-indigo-500 rounded-full blur-lg opacity-75 animate-pulse"></div>
-              <div className="relative bg-gradient-to-r from-blue-500 to-indigo-600 p-6 rounded-full shadow-2xl transform hover:scale-110 transition-all duration-500">
-                <div className="text-4xl text-white animate-bounce">💼</div>
+              <div
+                className="absolute -inset-3 rounded-full blur-xl opacity-60"
+                style={{
+                  background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+                }}
+              ></div>
+              <div
+                className="relative p-5 rounded-full"
+                style={{
+                  background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+                }}
+              >
+                <span className="text-4xl">💼</span>
               </div>
             </div>
-            <h3 className="font-bold text-3xl bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mt-4 animate-fade-in">
+            <h3 className="font-bold text-2xl text-white mt-4">
               Let's Connect!
             </h3>
-            <p className="text-gray-600 mt-2 italic">
-              Ready to build something amazing together
+            <p className="text-slate-400 mt-1 text-sm italic">
+              Ready to build something amazing
             </p>
           </div>
 
-          <div className="space-y-6">
-            <div className="group bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-2xl border border-blue-200 hover:border-blue-400 transition-all duration-300 transform hover:scale-105">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg group-hover:animate-pulse">
-                  <span className="text-white text-lg">📧</span>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500 font-medium">Email</p>
-                  <a
-                    href={`mailto:${profile.email}`}
-                    className="text-blue-600 hover:text-blue-800 font-semibold transition-colors duration-300"
-                  >
-                    {profile.email}
-                  </a>
-                </div>
+          {/* Contact Info */}
+          <div className="space-y-4">
+            <motion.div
+              className="flex items-center gap-4 p-4 rounded-2xl border border-indigo-800 cursor-pointer"
+              style={{ background: "rgba(99, 102, 241, 0.1)" }}
+              whileHover={{ scale: 1.03, borderColor: "#6366f1" }}
+            >
+              <div
+                className="p-3 rounded-xl"
+                style={{
+                  background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
+                }}
+              >
+                <FaEnvelope className="text-white" />
               </div>
-            </div>
+              <div>
+                <p className="text-slate-400 text-xs">Email</p>
+                <a
+                  href={`mailto:${profile.email}`}
+                  className="text-indigo-300 font-semibold text-sm hover:text-white transition-colors"
+                >
+                  {profile.email}
+                </a>
+              </div>
+            </motion.div>
 
-            <div className="group bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-2xl border border-green-200 hover:border-green-400 transition-all duration-300 transform hover:scale-105">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg group-hover:animate-pulse">
-                  <span className="text-white text-lg">📱</span>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500 font-medium">Phone</p>
-                  <a
-                    href={`tel:${profile.phone}`}
-                    className="text-green-600 hover:text-green-800 font-semibold transition-colors duration-300"
-                  >
-                    {profile.phone}
-                  </a>
-                </div>
+            <motion.div
+              className="flex items-center gap-4 p-4 rounded-2xl border border-indigo-800 cursor-pointer"
+              style={{ background: "rgba(16, 185, 129, 0.08)" }}
+              whileHover={{ scale: 1.03, borderColor: "#10b981" }}
+            >
+              <div
+                className="p-3 rounded-xl"
+                style={{
+                  background: "linear-gradient(135deg, #10b981, #059669)",
+                }}
+              >
+                <FaPhone className="text-white" />
               </div>
-            </div>
+              <div>
+                <p className="text-slate-400 text-xs">Phone</p>
+                <a
+                  href={`tel:${profile.phone}`}
+                  className="text-emerald-400 font-semibold text-sm hover:text-white transition-colors"
+                >
+                  {profile.phone}
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="flex items-center gap-4 p-4 rounded-2xl border border-indigo-800"
+              style={{ background: "rgba(239, 68, 68, 0.08)" }}
+              whileHover={{ scale: 1.03, borderColor: "#ef4444" }}
+            >
+              <div
+                className="p-3 rounded-xl"
+                style={{
+                  background: "linear-gradient(135deg, #ef4444, #dc2626)",
+                }}
+              >
+                <FaMapMarkerAlt className="text-white" />
+              </div>
+              <div>
+                <p className="text-slate-400 text-xs">Location</p>
+                <p className="text-red-400 font-semibold text-sm">
+                  {profile.location && profile.location !== "India"
+                    ? profile.location
+                    : "Chandigarh, India"}
+                </p>
+              </div>
+            </motion.div>
           </div>
 
-          <div className="mt-8">
-            <h4 className="font-bold text-xl text-gray-900 mb-4 text-center">
-              Follow Me
-            </h4>
+          {/* Social Links */}
+          <div>
+            <h4 className="font-bold text-white mb-4 text-center">Follow Me</h4>
             <div className="flex gap-4 justify-center">
-              <a
+              <motion.a
                 href={profile.social?.github || "https://github.com/diveshk22"}
                 target="_blank"
                 rel="noreferrer"
-                className="group relative p-4 bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl hover:from-gray-800 hover:to-black transition-all duration-500 transform hover:scale-110 hover:rotate-3 shadow-lg hover:shadow-2xl"
+                className="p-4 rounded-xl border border-slate-700 text-slate-300 hover:text-white transition-all duration-300"
+                style={{ background: "rgba(255,255,255,0.05)" }}
+                whileHover={{
+                  scale: 1.15,
+                  background: "rgba(255,255,255,0.15)",
+                }}
               >
-                <FaGithub className="text-3xl text-gray-700 group-hover:text-white transition-colors duration-300" />
-                <div className="absolute -top-2 -right-2 w-4 h-4 bg-green-500 rounded-full animate-ping group-hover:animate-pulse"></div>
-              </a>
-              <a
-                href={profile.social?.linkedin || "https://www.linkedin.com/in/divesh-kumar-9a3b21348?utm_source=share_via&utm_content=profile&utm_medium=member_ios"}
+                <FaGithub className="text-3xl" />
+              </motion.a>
+              <motion.a
+                href={
+                  profile.social?.linkedin ||
+                  "https://www.linkedin.com/in/divesh-kumar-9a3b21348"
+                }
                 target="_blank"
                 rel="noreferrer"
-                className="group relative p-4 bg-gradient-to-r from-blue-100 to-blue-200 rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-500 transform hover:scale-110 hover:-rotate-3 shadow-lg hover:shadow-2xl"
+                className="p-4 rounded-xl border border-blue-800 text-blue-400 hover:text-white transition-all duration-300"
+                style={{ background: "rgba(59, 130, 246, 0.1)" }}
+                whileHover={{
+                  scale: 1.15,
+                  background: "rgba(59, 130, 246, 0.3)",
+                }}
               >
-                <FaLinkedin className="text-3xl text-blue-700 group-hover:text-white transition-colors duration-300" />
-                <div className="absolute -top-2 -right-2 w-4 h-4 bg-blue-500 rounded-full animate-ping group-hover:animate-pulse"></div>
-              </a>
+                <FaLinkedin className="text-3xl" />
+              </motion.a>
             </div>
           </div>
-        </aside>
+        </motion.aside>
       </div>
     </div>
   );

@@ -6,51 +6,57 @@ import emailjs from "@emailjs/browser";
 
 export default function Contact() {
   const formRef = useRef();
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [status, setStatus] = useState("idle");
 
-  const keyMap = { from_name: "name", from_email: "email", message: "message" };
+  const keyMap = { from_name: "name", from_email: "email", subject: "subject", message: "message" };
   const handleChange = (e) =>
     setForm({ ...form, [keyMap[e.target.name]]: e.target.value });
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  setStatus("sending");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setStatus("sending");
 
-  emailjs
-    .sendForm(
-      "service_sjeexqc",
-      "template_05dpc4r",
-      formRef.current,
-      "5xY1lOeqpWg2NZYeG",
-    )
-    .then(() => {
-      // Auto-reply user ko
-      emailjs.send(
+    emailjs
+      .sendForm(
         "service_sjeexqc",
-        "template_vutrjvn",
-        {
-          from_name: form.name,
-          from_email: form.email,
-          message: form.message,
-        },
+        "template_05dpc4r",
+        formRef.current,
         "5xY1lOeqpWg2NZYeG",
-      );
-      setStatus("success");
-      setForm({ name: "", email: "", message: "" });
-      setTimeout(() => setStatus("idle"), 4000);
-    })
-    .catch(() => {
-      setStatus("error");
-      setTimeout(() => setStatus("idle"), 4000);
-    });
-};
+      )
+      .then(() => {
+        emailjs.send(
+          "service_sjeexqc",
+          "template_vutrjvn",
+          {
+            from_name: form.name,
+            from_email: form.email,
+            subject: form.subject,
+            message: form.message,
+          },
+          "5xY1lOeqpWg2NZYeG",
+        );
+        setStatus("success");
+        setForm({ name: "", email: "", subject: "", message: "" });
+        setTimeout(() => setStatus("idle"), 4000);
+      })
+      .catch(() => {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 4000);
+      });
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-6">
+    <div
+      className="min-h-screen p-4 sm:p-6"
+      style={{
+        background:
+          "linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%)",
+      }}
+    >
       <div className="max-w-4xl mx-auto">
         <motion.h2
-          className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent text-center mb-12"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent text-center mb-8 sm:mb-12"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -59,7 +65,7 @@ const handleSubmit = (e) => {
         </motion.h2>
 
         <motion.p
-          className="text-xl text-gray-700 text-center mb-12 max-w-2xl mx-auto"
+          className="text-base sm:text-xl text-gray-400 text-center mb-8 sm:mb-12 max-w-2xl mx-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -86,12 +92,14 @@ const handleSubmit = (e) => {
               }`}
               onClick={(e) => e.stopPropagation()}
             >
-              <div className={`text-5xl mb-4`}>
+              <div className="text-5xl mb-4">
                 {status === "success" ? "✅" : "❌"}
               </div>
-              <p className={`text-lg font-bold ${
-                status === "success" ? "text-green-700" : "text-red-700"
-              }`}>
+              <p
+                className={`text-lg font-bold ${
+                  status === "success" ? "text-green-700" : "text-red-700"
+                }`}
+              >
                 {status === "success"
                   ? "Message sent successfully! I'll get back to you soon."
                   : "Something went wrong. Please try again!"}
@@ -106,29 +114,34 @@ const handleSubmit = (e) => {
           </motion.div>
         )}
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+          {/* Left - Contact Info */}
           <motion.div
-            className="bg-gradient-to-br from-white via-blue-50 to-indigo-50 p-8 rounded-3xl shadow-2xl border border-blue-100"
+            className="p-5 sm:p-8 rounded-3xl border border-indigo-800"
+            style={{
+              background: "rgba(30,27,75,0.6)",
+              backdropFilter: "blur(20px)",
+            }}
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-6">
               Contact Information
             </h3>
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               <motion.div
                 className="flex items-center gap-4 p-4 bg-white/60 rounded-2xl hover:bg-white/80 transition-all duration-300"
                 whileHover={{ scale: 1.02 }}
               >
-                <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl">
+                <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl shrink-0">
                   <FaEnvelope className="text-white text-xl" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="text-gray-600 text-sm">Email</p>
                   <a
                     href={`mailto:${profile.email}`}
-                    className="text-blue-600 hover:text-blue-800 font-semibold"
+                    className="text-blue-600 hover:text-blue-800 font-semibold text-sm break-all"
                   >
                     {profile.email}
                   </a>
@@ -139,7 +152,7 @@ const handleSubmit = (e) => {
                 className="flex items-center gap-4 p-4 bg-white/60 rounded-2xl hover:bg-white/80 transition-all duration-300"
                 whileHover={{ scale: 1.02 }}
               >
-                <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl">
+                <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl shrink-0">
                   <FaPhone className="text-white text-xl" />
                 </div>
                 <div>
@@ -154,8 +167,8 @@ const handleSubmit = (e) => {
               </motion.div>
             </div>
 
-            <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-100">
-              <h4 className="font-bold text-blue-700 text-lg mb-2">
+            <div className="mt-6 sm:mt-8 p-4 sm:p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-100">
+              <h4 className="font-bold text-blue-700 text-base sm:text-lg mb-2">
                 Let's Build Something Great!
               </h4>
               <p className="text-gray-700 text-sm">
@@ -163,20 +176,40 @@ const handleSubmit = (e) => {
                 I'm here to help turn your vision into reality.
               </p>
             </div>
+
+            {/* Chandigarh Map */}
+            <div
+              className="mt-6 rounded-2xl overflow-hidden border border-indigo-700"
+              style={{ height: "220px" }}
+            >
+              <iframe
+                title="Chandigarh Map"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d109372.93555655083!2d76.6787!3d30.7333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390fed0be66ec96b%3A0xa5ff67f9527319fe!2sChandigarh!5e0!3m2!1sen!2sin!4v1234567890"
+                width="100%"
+                height="220"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </motion.div>
 
+          {/* Right - Send Message Form */}
           <motion.div
-            className="bg-gradient-to-br from-white via-purple-50 to-pink-50 p-8 rounded-3xl shadow-2xl border border-purple-100"
+            className="p-5 sm:p-8 rounded-3xl border border-indigo-800"
+            style={{
+              background: "rgba(30,27,75,0.6)",
+              backdropFilter: "blur(20px)",
+            }}
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">
-              Send Message
-            </h3>
-            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-6">Send Message</h3>
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-300 mb-2">
                   Your Name
                 </label>
                 <input
@@ -190,7 +223,7 @@ const handleSubmit = (e) => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-300 mb-2">
                   Email Address
                 </label>
                 <input
@@ -204,7 +237,21 @@ const handleSubmit = (e) => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-300 mb-2">
+                  Subject
+                </label>
+                <input
+                  type="text"
+                  name="subject"
+                  value={form.subject}
+                  onChange={handleChange}
+                  placeholder="Enter subject"
+                  required
+                  className="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 bg-white/80"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-300 mb-2">
                   Your Message
                 </label>
                 <textarea
@@ -213,7 +260,7 @@ const handleSubmit = (e) => {
                   onChange={handleChange}
                   placeholder="Tell me about your project..."
                   required
-                  rows="5"
+                  rows="7"
                   className="w-full px-4 py-3 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 bg-white/80 resize-none"
                 />
               </div>
@@ -225,7 +272,13 @@ const handleSubmit = (e) => {
                 whileTap={{ scale: 0.95 }}
               >
                 <span className="flex items-center justify-center gap-2">
-                  {status === "sending" ? "Sending..." : <><FaPaperPlane /> Send Message</>}
+                  {status === "sending" ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      <FaPaperPlane /> Send Message
+                    </>
+                  )}
                 </span>
               </motion.button>
             </form>
