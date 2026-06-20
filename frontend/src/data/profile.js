@@ -8,8 +8,7 @@ export const profile = {
   resumeFileName: "dev kumar.pdf",
   social: {
     github: "https://github.com/diveshk22",
-    linkedin:
-      "https://www.linkedin.com/in/divesh-kumar-9a3b21348?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
+    linkedin: "https://www.linkedin.com/in/divesh-kumar-9a3b21348?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
   },
   skills: [
     "React",
@@ -25,26 +24,5 @@ export const profile = {
     "Laravel",
     "WordPress",
     "Fullstack Development",
-  ],
-  experience: [
-    {
-      company: "Company A",
-      role: "Frontend Developer",
-      period: "2022 — Present",
-      bullets: ["Built feature X", "Improved performance by 30%"],
-    },
-    {
-      company: "Company B",
-      role: "Frontend Intern",
-      period: "2021 — 2022",
-      bullets: ["Worked on UI components", "Wrote tests"],
-    },
-  ],
-  education: [
-    {
-      school: "University X",
-      degree: "B.S. in Computer Science",
-      period: "2018 — 2022",
-    },
   ],
 };

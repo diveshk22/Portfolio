@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import API_URL from "../config";
+
+const experienceData = [
+  {
+    _id: "1",
+    role: "Full Stack Developer Intern / Trainee",
+    company: "A2IT InternEdge",
+    duration: "6 Months (Training & Internship)",
+    description: "Successfully completed 6 months of full stack development training and internship focusing on React.js, Node.js, Express.js, and MongoDB. Built multiple responsive and dynamic web projects using the MERN stack.",
+    tech: ["React.js", "Node.js", "Express.js", "MongoDB"],
+  },
+  {
+    _id: "2",
+    role: "Full Stack Developer",
+    company: "Get Now",
+    duration: "2 Months (Remote)",
+    description: "Developed a CRM-based web application using Next.js and Supabase. Built core CRM features including customer management, lead tracking, contact management, and activity logging. Implemented real-time data sync with Supabase, user authentication, role-based access control, and a responsive dashboard with sales pipeline and reporting views.",
+    tech: ["Next.js", "Supabase", "PostgreSQL", "Tailwind CSS"],
+  },
+];
 
 export default function Experience() {
-  const [experiences, setExperiences] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [expandedIndex, setExpandedIndex] = useState(null);
-
-  useEffect(() => {
-    fetch(`${API_URL}/api/experience`)
-      .then((res) => res.json())
-      .then((data) => {
-        setExperiences(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch experiences:", err);
-        setLoading(false);
-      });
-  }, []);
+  const experiences = experienceData;
 
   const toggleExpand = (index) => {
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -37,14 +41,7 @@ export default function Experience() {
           Experience
         </motion.h2>
 
-        {loading ? (
-          <div className="flex justify-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
-          </div>
-        ) : experiences.length === 0 ? (
-          <p className="text-center text-gray-500 italic">No experience entries yet.</p>
-        ) : (
-          <div className="grid gap-8 md:grid-cols-2">
+        <div className="flex flex-col gap-6">
             {experiences.map((exp, idx) => (
               <motion.article
                 key={exp._id}
@@ -93,8 +90,7 @@ export default function Experience() {
                 )}
               </motion.article>
             ))}
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );

@@ -1,31 +1,9 @@
 // src/pages/Dashboard.jsx
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { FaGithub, FaLinkedin, FaDownload, FaGlobe } from "react-icons/fa";
-import API_URL from "../config";
+import { profile } from "../data/profile";
 
 export default function Dashboard() {
-  const [profile, setProfile] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch(`${API_URL}/api/profile`)
-      .then((res) => res.json())
-      .then((data) => {
-        setProfile(data);
-        setLoading(false);
-      })
-      .catch((err) =>
-        console.error("Error communicating with dynamic database:", err),
-      );
-  }, []);
-
-  if (loading || !profile) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-6">

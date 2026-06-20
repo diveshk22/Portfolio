@@ -30,9 +30,9 @@ export default function Education() {
     {
       title: "Full Stack Developer Intern / Trainee",
       company: "A2IT InternEdge",
-      period: "3 Months (Training & Internship)",
+      period: "6 Months (Training & Internship)",
       description:
-        "Successfully completed 3 months of full stack development training and internship focusing on React.js, Node.js, Express.js, and MongoDB. Built multiple responsive and dynamic web projects using the MERN stack.",
+        "Successfully completed 6 months of full stack development training and internship focusing on React.js, Node.js, Express.js, and MongoDB. Built multiple responsive and dynamic web projects using the MERN stack.",
     },
   ];
 
